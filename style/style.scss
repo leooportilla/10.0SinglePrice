@@ -1,0 +1,271 @@
+@font-face {
+    font-family: Karla Regular;
+    src: url(../fonts/KarlaRegular.ttf);
+}
+
+@font-face {
+    font-family: Karla Bold;
+    src: url(../fonts/KarlaBold.ttf);
+}
+
+/* VARIABLE */
+// Colores primarios
+$Colores: (
+    "Cyan": rgb(42, 178, 175),
+    "Bright Yellow": rgb(192, 223, 52),
+    "Light Gray": rgb(229, 239, 245),
+    "Grayish Blue": rgb(152, 166, 189),
+
+    // Colores adiccionales
+    "Light Cyan": rgb(74, 190, 189),
+    "White": rgb(250, 250, 250, ),
+    "Black": rgb(0, 0, 0),
+);
+
+// Fonts
+$Fonts: (
+    "Fonts400": Karla Regular,
+    "Fonts700": Karla Bold,
+);
+
+// Resolucion
+$Resolucion: (
+    "MovilSmall": 375px,
+    "MovilStandard": 480px,
+    "TabletSmall": 768px,
+    "TabletStandard": 960px,
+    "Laptop": 1024px,
+    "Desktop": 1328px,
+);
+
+/* Font Size */
+$FontSize: 16px;
+
+
+/* FUNCIONES */
+// Fonts
+@mixin Fonts ($color, $Fonts, $size) {
+    color: $color;
+    font-family: $Fonts;
+    font-size: $size;
+}
+
+// Flex
+@mixin Flex ($justify, $align, $direction) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-direction: $direction;
+}
+
+// Mini Tarjeta
+@mixin Orden ($Color, $Border) {
+    width: 50%;
+    height: 100%;
+    padding: 2.7em;
+    border-radius: $Border;
+    background-color: $Color;
+    letter-spacing: 0.05em;
+}
+// Reponsive Desing
+@mixin Tablet ($resolucion : 960px) {
+    @media screen and (max-width: $resolucion) {
+        @content;
+    }
+}
+
+@mixin Movil ($resolucion : 480px) {
+    @media screen and (max-width: $resolucion) {
+        @content;
+    }
+}
+
+/* Normalize */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Pagina principal */
+body {
+    font-size: $FontSize;
+    width: 100vw;
+    height: 100vh;
+    background-color: map-get($Colores, "Light Gray");
+    @include Flex (center, center, column);
+
+    & .card {
+        width: 630px;
+        height: 475px;
+        border-radius: 0.5em;
+        background-color: map-get($Colores, "White");
+        box-shadow: 0 0 20px -10px map-get($Colores, "Black");
+
+        &__holder {
+            width: 100%;
+            height: 50%;
+            padding: 2.7em;
+
+            &-title {
+                @include Fonts(map-get($Colores, "Cyan"), map-get($Fonts, "Fonts700"), 1em);
+                margin-bottom: 1.5em;
+            }
+
+            &-subtitle {
+                @include Fonts(map-get($Colores, "Bright Yellow"), map-get($Fonts, "Fonts400"), 1em);
+                margin-bottom: 1.5em;
+            }
+
+            &-paragraph {
+                @include Fonts(map-get($Colores, "Grayish Blue"), map-get($Fonts, "Fonts400"), 1em);
+                line-height: 1.8;
+            }
+        }
+
+        &__price {
+            @include Flex (normal, normal, row);
+            width: 100%;
+            height: 50%;
+
+            &-buy {
+                @include Orden (map-get($Colores, "Cyan"), 0 0 0 0.5em);
+
+                & h1 {
+                    @include Fonts(map-get($Colores, "White"), map-get($Fonts, "Fonts700"), 1em);
+                    margin-bottom: 1em;
+                }
+
+                & div {
+                    @include Flex (normal, center, row);
+                    margin-bottom: 1em;
+
+                    & h2 {
+                        @include Fonts(map-get($Colores, "White"), map-get($Fonts, "Fonts400"), 1.7em);
+                        margin-right: 0.5em;
+                    }
+
+                    & h3 {
+                        @include Fonts(map-get($Colores, "White"), map-get($Fonts, "Fonts400"), 1em);
+                        opacity: 0.5;
+                        font-weight: 200;
+                        margin: 0;
+                    }
+                }
+
+                & h3 {
+                    @include Fonts(map-get($Colores, "White"), map-get($Fonts, "Fonts400"), 0.8em);
+                    font-weight: 200;
+                    opacity: 0.9;
+                    margin-bottom: 1.5em;
+                }
+
+                & button {
+                    width: 100%;
+                    height: auto;
+                    @include Fonts(map-get($Colores, "White"), map-get($Fonts, "Fonts400"), 1em);
+                    letter-spacing: 0.05em;
+                    padding: 0.8em;
+                    background-color: map-get($Colores, "Bright Yellow");
+                    box-shadow: 0 15px 30px -17px map-get($Colores, "Black");
+                    border-radius: 0.4em;
+                    border: 0;
+                }
+            }
+
+            &-description {
+                @include Orden (map-get($Colores, "Light Cyan"), 0 0 0.5em 0em);
+
+                & h1 {
+                    @include Fonts(map-get($Colores, "White"), map-get($Fonts, "Fonts700"), 1em);
+                    margin-bottom: 1em;
+                }
+
+                & p {
+                    @include Fonts(map-get($Colores, "White"), map-get($Fonts, "Fonts400"), 0.75em);
+                    font-weight: 200;
+                    opacity: 0.9;
+                    line-height: 1.5;
+                    margin-bottom: 1em;
+                }
+            }
+        }
+    }
+
+    /* Autores */
+    & .footer {
+        @include Flex(center, center, row);
+        @include Fonts(map-get($Colores, "VeryDarkBlue"), map-get($Fonts, "Fonts700"), 1em);
+        margin-top: 2em;
+
+        &__atributos {
+            font-size: 1em;
+
+            &-enlace {
+                margin-left: 0.3em;
+                margin-right: 0.3em;
+            }
+        }
+    }
+}
+
+/* Reponsive Desing */
+@include Movil (360px) {
+    body {
+        width: 100vw;
+        height: 100vh;
+        @include Flex (center, center, column);
+    
+        & .card {
+            width: 300px;
+            height: auto;
+            margin-top: 10%;
+    
+            &__holder {
+                height: auto;
+                padding: 1.5em;
+    
+                &-title {
+                    font-size: 1.3em;
+                }
+    
+                &-subtitle {
+                    font-size: 1em;
+                }
+    
+                &-paragraph {
+                    font-size: 0.8em;
+                }
+            }
+    
+            &__price {
+                @include Flex (normal, normal, column);
+                width: auto;
+                height: auto;
+    
+                &-buy {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0;
+                    padding: 1.5em;
+                }
+    
+                &-description {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0 0 0.5em 0.5em;
+                    padding: 1.5em;
+    
+                    & p {
+                        margin-bottom: 0.5em;
+                    }
+                }
+            }
+        }
+    
+        /* Autores */
+        & .footer {
+            font-size: 0.7em;
+        }
+    }
+}
